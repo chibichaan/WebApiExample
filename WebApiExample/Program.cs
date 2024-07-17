@@ -47,6 +47,19 @@ using (var client = new HttpClient())
     //response.EnsureSuccessStatusCode();
 
     var album = await response.Content.ReadFromJsonAsync<Album>();
-    Console.WriteLine($"{album}\n");
-    
+    //Console.WriteLine($"{album}\n");
 }
+
+//запрос DELETE
+
+using (var client = new HttpClient())
+{
+    var response = await client.DeleteAsync("https://jsonplaceholder.typicode.com/todos");
+    //response.EnsureSuccessStatusCode();
+
+    var jsonResponse = await response.Content.ReadAsStringAsync();
+    Console.WriteLine($"{jsonResponse}\n");
+}
+
+
+//запрос PATCH не делала, потому что put-запрос (не) работает плохо
