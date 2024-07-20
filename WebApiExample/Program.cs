@@ -59,19 +59,20 @@ using (var client = new HttpClient())
     response.EnsureSuccessStatusCode();
 
     var post = await response.Content.ReadFromJsonAsync<Post>();
-    Console.WriteLine($" {post.UserId} - {post.Body}");
+    //Console.WriteLine($" {post.UserId} - {post.Body}");
 }
 
 //запрос DELETE
 
 using (var client = new HttpClient())
 {
-    var response = await client.DeleteAsync("https://jsonplaceholder.typicode.com/todos");
-    //response.EnsureSuccessStatusCode();
+    var response = await client.DeleteAsync("https://jsonplaceholder.typicode.com/posts/1");
+    Console.WriteLine(response.EnsureSuccessStatusCode());
 
     var jsonResponse = await response.Content.ReadAsStringAsync();
-    // Console.WriteLine($"{jsonResponse}\n");
+    
+    //posts = JsonSerializer.Deserialize<List<Post>>(jsonResponse);
+
+    //Console.WriteLine(posts);
+    //Console.WriteLine($"{jsonResponse}\n");
 }
-
-
-//запрос PATCH не делала, потому что put-запрос (не) работает плохо
