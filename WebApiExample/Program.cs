@@ -53,13 +53,13 @@ using (var client = new HttpClient())
 using (var client = new HttpClient())
 {
     //обновить полностью информацию
-    var response = await client.PutAsJsonAsync("https://jsonplaceholder.typicode.com/albums",
-        new Album() { Id = 1, UserId = 1, Title = "update album" });
+    var response = await client.PutAsJsonAsync("https://jsonplaceholder.typicode.com/posts/1",
+        new Post() { Id = 1, UserId = 1, Title = "update album", Body = "et setera" });
 
-    //response.EnsureSuccessStatusCode();
+    response.EnsureSuccessStatusCode();
 
-    var album = await response.Content.ReadFromJsonAsync<Album>();
-    //Console.WriteLine($"{album}\n");
+    var post = await response.Content.ReadFromJsonAsync<Post>();
+    Console.WriteLine($" {post.UserId} - {post.Body}");
 }
 
 //запрос DELETE
