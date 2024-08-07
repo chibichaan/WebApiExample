@@ -28,13 +28,14 @@ using (var client = new HttpClient())
 {
     var result = await client.GetFromJsonAsync<List<Comment>>("https://jsonplaceholder.typicode.com/posts/1/comments");
 
-    // foreach (var comment in result.GroupBy(p => p.PostId).Select(g => g.TakeLast(2)))
-    // {
-    //     Console.WriteLine(JsonSerializer.Serialize(comment));
-    // }
+    foreach (var comment in result.GroupBy(p => p.PostId).Select(g => g.TakeLast(2)))
+    {
+        Console.WriteLine(JsonSerializer.Serialize(comment));
+    }
 }
 
 //запрос POST
+var post = default(Post);
 using (var client = new HttpClient())
 {
     //отправляемый объект
@@ -44,10 +45,10 @@ using (var client = new HttpClient())
     var response = await client.PostAsJsonAsync("https://jsonplaceholder.typicode.com/posts", newPost);
     response.EnsureSuccessStatusCode();
 
-    var comment = await response.Content.ReadFromJsonAsync<Post>();
-
-    //Console.WriteLine($"Id: {comment?.Id} - UserId: {comment?.UserId} - Title: {comment?.Title} - Body: {comment.Body}");
+    post = await response.Content.ReadFromJsonAsync<Post>();
 }
+
+Console.WriteLine($"Id: {post?.Id} - UserId: {post?.UserId} - Title: {post?.Title} - Body: {post.Body}");
 
 //запрос PUT
 using (var client = new HttpClient())
@@ -58,7 +59,7 @@ using (var client = new HttpClient())
 
     response.EnsureSuccessStatusCode();
 
-    var post = await response.Content.ReadFromJsonAsync<Post>();
+    post = await response.Content.ReadFromJsonAsync<Post>();
     //Console.WriteLine($" {post.UserId} - {post.Body}");
 }
 
